@@ -10,25 +10,14 @@ import Foundation
 
 @objc protocol PhotoListViewModelDelegate {
     
-    func photoListViewModelDidUpdateFavorite()
-    
 }
 
-protocol PhotoListViewModelInterface {
-    
-    weak var delegate: PhotoListViewModelDelegate? { get set }
-    var photoViewModels: [PhotoViewModelInterface] { get }
-    subscript(index: Int) -> PhotoViewModelInterface { get }
-    func switchFavorite(at index: Int)
-    
-}
-
-final class PhotoListViewModel: PhotoListViewModelInterface {
+final class PhotoListViewModel {
     
     weak var delegate: PhotoListViewModelDelegate?
-    private(set) var photoViewModels: [PhotoViewModelInterface] = []
+    private(set) var photoViewModels: [PhotoViewModel] = []
     
-    subscript(index: Int) -> PhotoViewModelInterface {
+    subscript(index: Int) -> PhotoViewModel {
         return photoViewModels[index]
     }
     
@@ -37,14 +26,9 @@ final class PhotoListViewModel: PhotoListViewModelInterface {
     }
     
     func createPhotoViewModels() {
-        photoViewModels = Photo.defaultPhotos.map({ (photo) -> PhotoViewModelInterface in
+        photoViewModels = Photo.defaultPhotos.map({ (photo) -> PhotoViewModel in
             return PhotoViewModel(photo: photo)
         })
-    }
-    
-    func switchFavorite(at index: Int) {
-        photoViewModels[index].switchFavorite()
-        delegate?.photoListViewModelDidUpdateFavorite()
     }
 }
 

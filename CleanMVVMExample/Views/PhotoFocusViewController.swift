@@ -10,7 +10,7 @@ import UIKit
 
 class PhotoFocusViewController: UIViewController, PhotoViewModelDelegate {
     
-    var photoViewModel: PhotoViewModelInterface!
+    var viewModel: PhotoViewModel!
     
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var photoNameLabel: UILabel!
@@ -19,17 +19,17 @@ class PhotoFocusViewController: UIViewController, PhotoViewModelDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        photoViewModel.delegate = self
-        photoImageView.image = UIImage(named: photoViewModel.imageName)
-        photoNameLabel.text = photoViewModel.name
-        let favoriteIcon = UIImage(named: photoViewModel.favorite ? "ic_favorite": "ic_favorite_border")
+        viewModel.delegate = self
+        photoImageView.image = UIImage(named: viewModel.imageName)
+        photoNameLabel.text = viewModel.name
+        let favoriteIcon = UIImage(named: viewModel.favorite ? "ic_favorite": "ic_favorite_border")
         photoFavoriteButton.setImage(favoriteIcon, for: .normal)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        photoViewModel.delegate = nil
+        viewModel.delegate = nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,7 +38,7 @@ class PhotoFocusViewController: UIViewController, PhotoViewModelDelegate {
     }
 
     @IBAction func handlePhotoFavoriteClick(_ sender: Any) {
-        photoViewModel.switchFavorite()
+        viewModel.switchFavorite()
     }
     
     @IBAction func handleBackClick(_ sender: Any) {
@@ -47,8 +47,8 @@ class PhotoFocusViewController: UIViewController, PhotoViewModelDelegate {
     
     // MARK: - Photo view model delegate
     
-    func photoViewModelDidUpdateFavorite() {
-        let favoriteIcon = UIImage(named: photoViewModel.favorite ? "ic_favorite": "ic_favorite_border")
+    func didUpdateFavorite() {
+        let favoriteIcon = UIImage(named: viewModel.favorite ? "ic_favorite": "ic_favorite_border")
         photoFavoriteButton.setImage(favoriteIcon, for: .normal)
     }
 }

@@ -8,15 +8,15 @@
 
 import UIKit
 
-class PhotoListViewController: UITableViewController, PhotoListViewModelDelegate, PhotoCellDelegate {
+class PhotoListViewController: UITableViewController, PhotoListViewModelDelegate {
     
-    var photoListViewModel: PhotoListViewModelInterface = PhotoListViewModel()
+    var viewModel: PhotoListViewModel = PhotoListViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.contentInset = UIEdgeInsets(top: -UIApplication.shared.statusBarFrame.height, left: 0, bottom: 0, right: 0)
-        photoListViewModel.delegate = self
+        viewModel.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,9 +32,7 @@ class PhotoListViewController: UITableViewController, PhotoListViewModelDelegate
     
     // MARK: - Photo list view model delegate
     
-    func photoListViewModelDidUpdateFavorite() {
-        tableView.reloadData()
-    }
+    
 
     // MARK: - Table view data source
 
@@ -43,17 +41,12 @@ class PhotoListViewController: UITableViewController, PhotoListViewModelDelegate
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photoListViewModel.photoViewModels.count
+        return viewModel.photoViewModels.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let photoViewModel = photoListViewModel[indexPath.row]
-        let favoriteIcon = UIImage(named: photoViewModel.favorite ? "ic_favorite": "ic_favorite_border")
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
-        cell.delegate = self
-        cell.photoImageView.image = UIImage(named: photoViewModel.imageName)
-        cell.photoFavoriteButton.setImage(favoriteIcon, for: .normal)
+        cell.viewModel = viewModel[indexPath.row]
         
         return cell
     }
@@ -64,38 +57,46 @@ class PhotoListViewController: UITableViewController, PhotoListViewModelDelegate
         performSegue(withIdentifier: "FocusSegue", sender: indexPath.row)
     }
     
-    // MARK: - Photo cell delegate
-    
-    func photoCellFavoriteButtonDidClick(cell: PhotoCell) {
-        let index = tableView.indexPath(for: cell)!.row
-        photoListViewModel.switchFavorite(at: index)
-    }
-    
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? PhotoFocusViewController,
             let index = sender as? Int{
-            vc.photoViewModel = photoListViewModel[index]
+            vc.viewModel = viewModel[index]
         }
     }
 }
 
-@objc protocol PhotoCellDelegate {
+class PhotoCell: UITableViewCell, PhotoViewModelDelegate {
     
-    func photoCellFavoriteButtonDidClick(cell: PhotoCell)
-    
-}
-
-class PhotoCell: UITableViewCell {
-    
-    weak var delegate: PhotoCellDelegate?
+    var viewModel: PhotoViewModel? {
+        willSet{
+            viewModel?.delegate = nil
+        }
+        didSet{
+            if let viewModel = viewModel {
+                viewModel.delegate = self
+                photoImageView.image = UIImage(named: viewModel.imageName)
+                let favoriteIcon = UIImage(named: viewModel.favorite ? "ic_favorite": "ic_favorite_border")
+                photoFavoriteButton.setImage(favoriteIcon, for: .normal)
+            }
+        }
+    }
     
     @IBOutlet var photoImageView: UIImageView!
     @IBOutlet weak var photoFavoriteButton: UIButton!
     
     @IBAction func handlePhotoFavoriteClick(_ sender: Any) {
-        delegate?.photoCellFavoriteButtonDidClick(cell: self)
+        viewModel?.switchFavorite()
+    }
+    
+    // MARK: - Photo view model delegate
+    
+    func didUpdateFavorite() {
+        if let viewModel = viewModel {
+            let favoriteIcon = UIImage(named: viewModel.favorite ? "ic_favorite": "ic_favorite_border")
+            photoFavoriteButton.setImage(favoriteIcon, for: .normal)
+        }
     }
 }
 

@@ -10,24 +10,14 @@ import Foundation
 
 @objc protocol PhotoViewModelDelegate {
     
-    func photoViewModelDidUpdateFavorite()
-    
+    func didUpdateFavorite()
 }
 
-protocol PhotoViewModelInterface {
-    
-    weak var delegate: PhotoViewModelDelegate? { get set }
-    var name: String { get }
-    var imageName: String { get }
-    var favorite: Bool { get }
-    func switchFavorite()
-    
-}
-
-final class PhotoViewModel: PhotoViewModelInterface {
+final class PhotoViewModel {
     
     weak var delegate: PhotoViewModelDelegate?
     private var photo: Photo
+    
     var name: String {
         return photo.name
     }
@@ -44,6 +34,6 @@ final class PhotoViewModel: PhotoViewModelInterface {
     
     func switchFavorite() {
         photo.favorite = !photo.favorite
-        delegate?.photoViewModelDidUpdateFavorite()
+        delegate?.didUpdateFavorite()
     }
 }
