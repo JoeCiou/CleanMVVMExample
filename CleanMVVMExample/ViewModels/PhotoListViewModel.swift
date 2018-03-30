@@ -10,25 +10,25 @@ import Foundation
 
 @objc protocol PhotoListViewModelDelegate {
     
+    func didUpdateSeries()
 }
 
 final class PhotoListViewModel {
     
     weak var delegate: PhotoListViewModelDelegate?
-    private(set) var photoViewModels: [PhotoViewModel] = []
     
-    subscript(index: Int) -> PhotoViewModel {
-        return photoViewModels[index]
+    var series: PhotoSeries = .first {
+        didSet{
+            delegate?.didUpdateSeries()
+        }
     }
     
-    init() {
-        createPhotoViewModels()
+    var photosNumber: Int {
+        return PhotoManager.shared.photos(series: series).count
     }
     
-    func createPhotoViewModels() {
-        photoViewModels = Photo.defaultPhotos.map({ (photo) -> PhotoViewModel in
-            return PhotoViewModel(photo: photo)
-        })
+    func photoViewModel(index: Int) -> PhotoViewModel? {
+        return PhotoViewModel(series: series, index: index)
     }
 }
 

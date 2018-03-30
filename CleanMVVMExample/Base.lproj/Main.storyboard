@@ -14,8 +14,8 @@
         <!--Photo List View Controller-->
         <scene sceneID="G0w-LP-uBj">
             <objects>
-                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="cUh-IQ-dHp" customClass="PhotoListViewController" customModule="CleanMVVMExample" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="150" estimatedRowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" id="Oau-9P-i6H">
+                <tableViewController id="cUh-IQ-dHp" customClass="PhotoListViewController" customModule="CleanMVVMExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="always" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="150" estimatedRowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" id="Oau-9P-i6H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -29,6 +29,9 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ruv-Mh-u9A">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QNY-pE-rac">
                                             <rect key="frame" x="331" y="106" width="44" height="44"/>
@@ -62,7 +65,21 @@
                             <outlet property="delegate" destination="cUh-IQ-dHp" id="VmG-Lh-gxG"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="ncf-mf-3Sr"/>
+                    <navigationItem key="navigationItem" id="ncf-mf-3Sr">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="luY-Bq-SBB">
+                            <rect key="frame" x="123" y="7" width="129" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Series 1"/>
+                                <segment title="Series 2"/>
+                            </segments>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="handleSeriesChanged:" destination="cUh-IQ-dHp" eventType="valueChanged" id="kMr-1r-T41"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
                     <connections>
                         <segue destination="fXU-G0-nWZ" kind="show" identifier="FocusSegue" id="qTb-XX-Wge"/>
                     </connections>
@@ -86,7 +103,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGm-Re-Bvh">
-                                <rect key="frame" x="8" y="20" width="44" height="40.5"/>
+                                <rect key="frame" x="8" y="64" width="44" height="40.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="bkk-Zr-CLG"/>
                                     <constraint firstAttribute="width" secondItem="uGm-Re-Bvh" secondAttribute="height" multiplier="37:34" id="uXY-Te-tEg"/>
@@ -103,7 +120,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pdd-3Y-a8Y">
-                                <rect key="frame" x="323" y="20" width="44" height="44"/>
+                                <rect key="frame" x="323" y="64" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="8E7-Ce-WL7"/>
                                     <constraint firstAttribute="width" secondItem="pdd-3Y-a8Y" secondAttribute="height" multiplier="1:1" id="nKq-US-Ugk"/>
@@ -142,10 +159,12 @@
         <!--Navigation Controller-->
         <scene sceneID="KEZ-Nq-YO5">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="Vhi-rh-WgT" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Vhi-rh-WgT" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="SAJ-cA-EDv">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

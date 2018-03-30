@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C3F0168206E2D4400BD92F1 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3F0167206E2D4400BD92F1 /* PhotoManager.swift */; };
 		7CDEC1392060B26C002D2A92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDEC1382060B26C002D2A92 /* AppDelegate.swift */; };
 		7CDEC13E2060B26D002D2A92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDEC13C2060B26D002D2A92 /* Main.storyboard */; };
 		7CDEC1402060B26D002D2A92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CDEC13F2060B26D002D2A92 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C3F0167206E2D4400BD92F1 /* PhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 		7CDEC1352060B26C002D2A92 /* CleanMVVMExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanMVVMExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDEC1382060B26C002D2A92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CDEC13D2060B26D002D2A92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				7CDEC1622060BB39002D2A92 /* Photo.swift */,
+				7C3F0167206E2D4400BD92F1 /* PhotoManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 			files = (
 				7CDEC1632060BB39002D2A92 /* Photo.swift in Sources */,
 				7CDEC1692060BC55002D2A92 /* PhotoListViewModel.swift in Sources */,
+				7C3F0168206E2D4400BD92F1 /* PhotoManager.swift in Sources */,
 				7CDEC1392060B26C002D2A92 /* AppDelegate.swift in Sources */,
 				7CDEC1672060BC1F002D2A92 /* PhotoListViewController.swift in Sources */,
 				7CDEC16D2060BF98002D2A92 /* PhotoFocusViewController.swift in Sources */,

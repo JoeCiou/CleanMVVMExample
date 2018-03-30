@@ -11,11 +11,10 @@ import UIKit
 class PhotoListViewController: UITableViewController, PhotoListViewModelDelegate {
     
     var viewModel: PhotoListViewModel = PhotoListViewModel()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.contentInset = UIEdgeInsets(top: -UIApplication.shared.statusBarFrame.height, left: 0, bottom: 0, right: 0)
         viewModel.delegate = self
     }
     
@@ -30,9 +29,15 @@ class PhotoListViewController: UITableViewController, PhotoListViewModelDelegate
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func handleSeriesChanged(_ sender: UISegmentedControl) {
+        viewModel.series = PhotoSeries(rawValue: sender.selectedSegmentIndex)!
+    }
+    
     // MARK: - Photo list view model delegate
     
-    
+    func didUpdateSeries() {
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
@@ -41,12 +46,12 @@ class PhotoListViewController: UITableViewController, PhotoListViewModelDelegate
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.photoViewModels.count
+        return viewModel.photosNumber
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
-        cell.viewModel = viewModel[indexPath.row]
+        cell.viewModel = viewModel.photoViewModel(index: indexPath.row)
         
         return cell
     }
@@ -62,7 +67,7 @@ class PhotoListViewController: UITableViewController, PhotoListViewModelDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? PhotoFocusViewController,
             let index = sender as? Int{
-            vc.viewModel = viewModel[index]
+            vc.viewModel = viewModel.photoViewModel(index: index)
         }
     }
 }

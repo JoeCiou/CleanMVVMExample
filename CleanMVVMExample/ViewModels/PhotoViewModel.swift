@@ -16,8 +16,12 @@ import Foundation
 final class PhotoViewModel {
     
     weak var delegate: PhotoViewModelDelegate?
-    private var photo: Photo
+    let series: PhotoSeries
+    let index: Int
     
+    private var photo: Photo {
+        return PhotoManager.shared.photo(series: series, index: index)
+    }
     var name: String {
         return photo.name
     }
@@ -28,12 +32,13 @@ final class PhotoViewModel {
         return photo.favorite
     }
     
-    init(photo: Photo) {
-        self.photo = photo
+    init(series: PhotoSeries, index: Int) {
+        self.series = series
+        self.index = index
     }
     
     func switchFavorite() {
-        photo.favorite = !photo.favorite
+        PhotoManager.shared.switchFavorite(series: series, index: index)
         delegate?.didUpdateFavorite()
     }
 }

@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 struct Photo {
     let name: String
     let imageName: String
@@ -18,15 +17,4 @@ struct Photo {
         self.name = name
         self.imageName = imageName
     }
-    
-    static var defaultPhotos: [Photo] = [Photo(name: "Bern", imageName: "bern.jpg"),
-                                         Photo(name: "Ronda", imageName: "ronda.jpg"),
-                                         Photo(name: "Cat", imageName: "cat.jpg"),
-                                         Photo(name: "Hope", imageName: "hope.jpg"),
-                                         Photo(name: "Sunset", imageName: "sunset.jpg"),
-                                         Photo(name: "Snowboard", imageName: "snowboard.jpg"),
-                                         Photo(name: "Remains", imageName: "remains.jpg"),
-                                         Photo(name: "Boy", imageName: "boy.jpg"),
-                                         Photo(name: "Bicycle", imageName: "bicycle.jpg"),
-                                         Photo(name: "Skateboard", imageName: "skateboard.jpg")]
 }
